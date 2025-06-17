@@ -428,9 +428,7 @@
 .leaflet-shadow-pane,
 .leaflet-marker-pane,
 .leaflet-popup-pane,
-.leaflet-tooltip-pane {
-    /* Remove all z-index settings */
-}
+.leaflet-tooltip-pane
 
 /* Simplify marker styling */
 .kostrad-marker {
@@ -559,91 +557,181 @@
     text-align: center;
 }
 
-/* Debug info styles */
-.debug-info {
-    font-family: 'Courier New', monospace;
-    line-height: 1.4;
-    font-size: 11px;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: rgba(0,0,0,0.8);
-    color: white;
-    padding: 10px;
-    font-size: 12px;
-    border-radius: 5px;
-    z-index: 10000;
-    max-width: 300px;
-    display: none;
+/* Additional styles moved from satpur.php */
+
+/* Enhanced popup container */
+.kostrad-popup-container .leaflet-popup-content-wrapper {
+    border-radius: 8px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+    padding: 0 !important;
 }
 
-.debug-info div {
-    margin-bottom: 3px;
+.kostrad-popup-container .leaflet-popup-content {
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.debug-info button {
-    margin-top: 5px;
-    font-size: 10px;
-    padding: 2px 6px;
-}
-
-/* ALPALSUS Specific Styles */
-.alpalsus-icon {
-    background: linear-gradient(135deg, #8b8c61, #63644a) !important;
-    color: white;
-}
-
-.alpalsus-card {
-    border: 2px solid var(--kostrad-secondary);
-    border-radius: 0.75rem;
+/* Material row hover effects */
+.material-row:hover {
+    background-color: rgba(44, 95, 45, 0.05);
+    transform: translateX(5px);
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #fff, #f8faf6);
-    box-shadow: 0 6px 15px rgba(151, 188, 98, 0.1);
-    position: relative;
+}
+
+.material-name {
+    font-weight: 500;
+}
+
+/* Enhanced badge styling */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.375rem;
+}
+
+.bg-success {
+    background-color: var(--kondisi-b) !important;
+}
+
+.bg-warning {
+    background-color: var(--kondisi-rr) !important;
+}
+
+.bg-danger {
+    background-color: var(--kondisi-rb) !important;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+/* Filter button styling */
+.btn-group .btn-check:checked + .btn-outline-primary {
+    background-color: var(--kostrad-primary);
+    border-color: var(--kostrad-primary);
+    color: white;
+}
+
+.btn-group .btn-check:checked + .btn-outline-success {
+    background-color: var(--kostrad-secondary);
+    border-color: var(--kostrad-secondary);
+    color: white;
+}
+
+/* Map controls styling */
+.map-controls .btn {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.map-controls .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Table enhancement */
+.table-responsive {
+    border-radius: 0.5rem;
     overflow: hidden;
 }
 
-.alpalsus-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(44, 95, 45, 0.2);
+.table thead th {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-.alpalsus-row {
-    background-color: rgba(139, 140, 97, 0.05);
+/* Card enhancements */
+.card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
-.alpalsus-summary-row {
-    background-color: rgba(139, 140, 97, 0.15) !important;
-    font-weight: bold;
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
 }
 
-/* Custom Marker for ALPALSUS */
-.kostrad-custom-marker.alpalsus .marker-inner {
-    background: linear-gradient(135deg, #8b8c61, #63644a);
+/* Spinner and loading states */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
 }
 
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .kostrad-header {
+        text-align: center;
+        padding: 1.5rem 0;
+    }
+    
+    .kostrad-unit-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .material-category-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    #kostradMap {
+        height: 400px !important;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        border-radius: 0.375rem !important;
+        margin-bottom: 0.5rem;
     }
 }
 
-/* Critical fix for map container */
-.kostrad-map-container {
-    overflow: visible !important;
+@media (max-width: 576px) {
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .kostrad-popup {
+        min-width: 200px;
+    }
+    
+    .map-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .map-controls .btn {
+        width: 100%;
+    }
 }
 
-/* Essential Map Styles */
-#kostradMap {
-    width: 100% !important;
-    height: 500px !important;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    z-index: 1;
-    position: relative !important;
+/* Print styles */
+@media print {
+    .kostrad-header,
+    .map-controls,
+    .btn,
+    .card-header {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+    
+    .table {
+        font-size: 12px;
+    }
+    
+    .table th {
+        background-color: #f8f9fa !important;
+        color: #000 !important;
+    }
 }

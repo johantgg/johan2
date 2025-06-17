@@ -1,5 +1,4 @@
 <?php
-
 include 'partials/session.php';
 include 'partials/main.php';
 
@@ -225,6 +224,38 @@ function getCategoryIcon($categoryCode) {
         }
     }
 
+    /* Back to Dashboard Button Styling */
+    .back-to-dashboard {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    }
+
+    .back-to-dashboard:hover {
+        background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        text-decoration: none;
+    }
+
+    .back-to-dashboard i {
+        transition: transform 0.3s ease;
+    }
+
+    .back-to-dashboard:hover i {
+        transform: translateX(-3px);
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
         .filter-card .card-body {
@@ -266,6 +297,11 @@ function getCategoryIcon($categoryCode) {
         .d-flex.justify-content-between {
             flex-direction: column;
             text-align: center;
+        }
+
+        .back-to-dashboard {
+            padding: 10px 20px;
+            font-size: 0.9rem;
         }
     }
 
@@ -323,7 +359,7 @@ function getCategoryIcon($categoryCode) {
     <?php include 'partials/head-css.php'; ?>
 </head>
 
-<?php include 'partials/body.php'; ?>
+<body data-topbar="light" data-layout="horizontal">
 
 <!-- Debug info panel -->
 <div id="debugInfo" class="debug-info">
@@ -336,19 +372,37 @@ function getCategoryIcon($categoryCode) {
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    <?php include 'partials/menu.php'; ?>
+    <?php include 'partials/horizontal.php'; ?>
 
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
 
-                <!-- Header dengan judul yang ditingkatkan -->
-                <div class="kostrad-header text-center">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3 class="mb-1 fw-bold text-white">SISTEM PEMETAAN ALUTSISTA SATUAN TEMPUR</h3>
-                                <p class="header-subtitle mb-0">Komando Cadangan Strategis Angkatan Darat (KOSTRAD) TNI</p>
+                <?php includeFileWithVariables('partials/page-title.php', array('pagetitle' => 'Sistem Alutsista KOSTRAD' , 'title' => 'Satuan Tempur')); ?>
+
+                <!-- Navigation Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title mb-1">
+                                            <i class="fas fa-shield-alt me-2 text-primary"></i>
+                                            Sistem Pemetaan Alutsista Satuan Tempur
+                                        </h5>
+                                        <p class="text-muted mb-0">Komando Cadangan Strategis Angkatan Darat (KOSTRAD) TNI</p>
+                                    </div>
+                                    <div>
+                                        <a href="index.php" class="back-to-dashboard">
+                                            <i class="fas fa-arrow-left"></i>
+                                            <span>Kembali ke Dashboard</span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -390,30 +444,35 @@ function getCategoryIcon($categoryCode) {
                 </div>
 
                 <!-- Map Section -->
-                <div class="kostrad-map-container slide-in-right">
-                    <div class="kostrad-map-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="mb-0">
-                                <i class="fas fa-map me-2"></i>Peta Lokasi Satuan Kostrad
-                            </h6>
-                            <div class="kostrad-map-controls">
-                                <button class="kostrad-map-btn" onclick="resetMapView()">
-                                    <i class="fas fa-home"></i> Reset
-                                </button>
-                                <button class="kostrad-map-btn" onclick="showAllKostradUnits()">
-                                    <i class="fas fa-eye"></i> Tampilkan Semua
-                                </button>
-                                <button class="kostrad-map-btn" onclick="reloadMarkers()">
-                                    <i class="fas fa-sync-alt"></i> Reload
-                                </button>
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-map me-2"></i>Peta Lokasi Satuan Kostrad
+                                    </h5>
+                                    <div class="kostrad-map-controls">
+                                        <button class="btn btn-sm btn-outline-primary" onclick="resetMapView()">
+                                            <i class="fas fa-home"></i> Reset
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" onclick="showAllKostradUnits()">
+                                            <i class="fas fa-eye"></i> Tampilkan Semua
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="reloadMarkers()">
+                                            <i class="fas fa-sync-alt"></i> Reload
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div style="position: relative;">
+                                    <div id="kostradMap" style="height: 600px; border-radius: 8px;"></div>
+                                    <div id="mapLoading" class="map-loading" style="display: none;">
+                                        <div class="spinner-border text-primary" role="status"></div>
+                                        <div class="mt-2">Loading map...</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div style="position: relative;">
-                        <div id="kostradMap"></div>
-                        <div id="mapLoading" class="map-loading" style="display: none;">
-                            <div class="spinner-border text-primary" role="status"></div>
-                            <div class="mt-2">Loading map...</div>
                         </div>
                     </div>
                 </div>
@@ -452,46 +511,56 @@ function getCategoryIcon($categoryCode) {
                 <!-- Alutsista Data Table -->
                 <div class="row mb-4 fade-in-up" id="alutsistaMaterialSection" style="display: none;">
                     <div class="col-12">
-                        <div class="alutsista-table">
-                            <div class="d-flex justify-content-between align-items-center p-3">
-                                <h5 class="mb-0" id="materialTableTitle">
-                                    <i class="fas fa-table me-2"></i>Data Alutsista
-                                </h5>
-                                <div class="btn-group">
-                                    <button class="btn btn-outline-success btn-sm" onclick="printTable()">
-                                        <i class="fas fa-print"></i> Print
-                                    </button>
-                                    <button class="btn btn-outline-primary btn-sm" onclick="exportToExcel()">
-                                        <i class="fas fa-download"></i> Export Excel
-                                    </button>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0" id="materialTableTitle">
+                                        <i class="fas fa-table me-2"></i>Data Alutsista
+                                    </h5>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-success btn-sm" onclick="printTable()">
+                                            <i class="fas fa-print"></i> Print
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-sm" onclick="exportToExcel()">
+                                            <i class="fas fa-download"></i> Export Excel
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0" id="alutsistaMaterialTable">
-                                    <thead>
-                                        <tr>
-                                            <th><i class="fas fa-list me-1"></i>Jenis Materil</th>
-                                            <th class="text-center"><i class="fas fa-calculator me-1"></i>Jumlah Total</th>
-                                            <th class="text-center"><i class="fas fa-check-circle me-1"></i>Kondisi B</th>
-                                            <th class="text-center"><i class="fas fa-exclamation-circle me-1"></i>Kondisi RR</th>
-                                            <th class="text-center"><i class="fas fa-times-circle me-1"></i>Kondisi RB</th>
-                                            <th class="text-center"><i class="fas fa-chart-line me-1"></i>Kesiapan %</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="alutsistaMaterialTableBody">
-                                        <tr><td colspan="6" class="text-center text-muted">Klik marker di peta untuk melihat data alutsista</td></tr>
-                                    </tbody>
-                                </table>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0" id="alutsistaMaterialTable">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th><i class="fas fa-list me-1"></i>Jenis Materil</th>
+                                                <th class="text-center"><i class="fas fa-calculator me-1"></i>Jumlah Total</th>
+                                                <th class="text-center"><i class="fas fa-check-circle me-1"></i>Kondisi B</th>
+                                                <th class="text-center"><i class="fas fa-exclamation-circle me-1"></i>Kondisi RR</th>
+                                                <th class="text-center"><i class="fas fa-times-circle me-1"></i>Kondisi RB</th>
+                                                <th class="text-center"><i class="fas fa-chart-line me-1"></i>Kesiapan %</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="alutsistaMaterialTableBody">
+                                            <tr><td colspan="6" class="text-center text-muted py-4">Klik marker di peta atau pilih filter untuk melihat data alutsista</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <!-- container-fluid -->
         </div>
+        <!-- End Page-content -->
+
         <?php include 'partials/footer.php'; ?>
     </div>
+    <!-- end main content-->
+
 </div>
+<!-- END layout-wrapper -->
 
 <?php include 'partials/right-sidebar.php'; ?>
 <?php include 'partials/vendor-scripts.php'; ?>
@@ -647,7 +716,7 @@ function addKostradMarkers() {
                             <div><i class="fas fa-map-marker-alt me-2"></i>${unit.headquarters}</div>
                             <div><i class="fas fa-city me-2"></i>${unit.city_name}, ${unit.province_name}</div>
                         </div>
-                        <button class="btn btn-kostrad-accent mt-2 w-100" onclick="showUnitAlutsista(${unit.id}, '${unit.unit_name.replace(/'/g, "\\'")}')">
+                        <button class="btn btn-primary mt-2 w-100" onclick="showUnitAlutsista(${unit.id}, '${unit.unit_name.replace(/'/g, "\\'")}')">
                             <i class="fas fa-database me-1"></i> Lihat Data Alutsista
                         </button>
                     </div>
@@ -696,7 +765,7 @@ function loadMaterialData(unitId, categoryId) {
     console.log('Loading material data for unit:', unitId, 'category:', categoryId);
     
     const tableBody = document.getElementById('alutsistaMaterialTableBody');
-    tableBody.innerHTML = '<tr><td colspan="6" class="text-center kostrad-loading"><div class="spinner-border spinner-border-sm me-2"></div>Memuat data...</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4"><div class="spinner-border spinner-border-sm me-2"></div>Memuat data...</td></tr>';
     
     fetch(`api/get_material_data.php?unit_id=${unitId}&category_id=${categoryId}`)
         .then(response => {
@@ -711,7 +780,7 @@ function loadMaterialData(unitId, categoryId) {
             
             if (data.error) {
                 console.error('Database error:', data.error);
-                tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${data.error}</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4">Error: ${data.error}</td></tr>`;
                 return;
             }
             
@@ -719,7 +788,7 @@ function loadMaterialData(unitId, categoryId) {
         })
         .catch(error => {
             console.error('Error loading material data:', error);
-            tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error memuat data: ${error.message}</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4">Error memuat data: ${error.message}</td></tr>`;
         });
 }
 
@@ -728,7 +797,7 @@ function displayMaterialData(data) {
     const tableBody = document.getElementById('alutsistaMaterialTableBody');
     
     if (!data || data.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Tidak ada data alutsista untuk kategori ini</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">Tidak ada data alutsista untuk kategori ini</td></tr>';
         return;
     }
     
@@ -923,7 +992,7 @@ function loadFilteredMaterialData(filterType, categoryId) {
     console.log('Loading filtered material data for:', filterType, 'category:', categoryId);
     
     const tableBody = document.getElementById('alutsistaMaterialTableBody');
-    tableBody.innerHTML = '<tr><td colspan="6" class="text-center kostrad-loading"><div class="spinner-border spinner-border-sm me-2"></div>Memuat data...</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4"><div class="spinner-border spinner-border-sm me-2"></div>Memuat data...</td></tr>';
     
     const apiUrl = filterType === 'keseluruhan' 
         ? `api/get_material_data_all.php?category_id=${categoryId}`
@@ -939,7 +1008,7 @@ function loadFilteredMaterialData(filterType, categoryId) {
             
             if (data.error) {
                 console.error('Database error:', data.error);
-                tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${data.error}</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4">Error: ${data.error}</td></tr>`;
                 return;
             }
             
@@ -947,7 +1016,7 @@ function loadFilteredMaterialData(filterType, categoryId) {
         })
         .catch(error => {
             console.error('Error loading filtered material data:', error);
-            tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error memuat data: ${error.message}</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4">Error memuat data: ${error.message}</td></tr>`;
         });
 }
 
